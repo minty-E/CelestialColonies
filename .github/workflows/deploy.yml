@@ -34,9 +34,9 @@ jobs:
         run: pnpm build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: build-artifact  # Ensure this name matches the download step
+          name: github-pages  # Ensure this name matches the download step
           path: ./dist  # Ensure this path matches your build output
 
   deploy:
@@ -52,7 +52,7 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v2
         with:
-          name: build-artifact
+          name: github-pages
           path: ./dist
 
       - name: Deploy to GitHub Pages
@@ -60,5 +60,5 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          artifact-name: build-artifact
+          artifact-name: github-pages
           publish_dir: ./dist
