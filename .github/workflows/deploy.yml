@@ -34,13 +34,20 @@ jobs:
         run: pnpm build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
-          name: github-pages  # Ensure this name matches the download step
-          path: ./dist  # Ensure this path matches your build output
+          name: github-pages 
+          path: ./dist 
+
+  verify-artifact:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: List artifacts
+        run: ls -R
 
   deploy:
-    needs: build
+    needs: verify-artifact
     runs-on: ubuntu-latest
     environment:
       name: github-pages
